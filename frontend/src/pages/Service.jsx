@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaUserTie, FaUtensils, FaShoppingCart, FaHeadset } from 'react-icons/fa';
+import Footer from '../components/Footer';
 
 const features = [
   {
@@ -30,15 +31,14 @@ const features = [
 
 const ServiceFeatures = () => {
   return (
+    <>
     <section className="py-12 px-6 md:px-16 bg-[#e4e4e4]">
-      {/* Section Title */}
       <div className="flex justify-center mb-10">
         <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1">
           Services
         </h2>
       </div>
 
-      {/* Feature Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((feature, index) => (
           <div
@@ -52,6 +52,8 @@ const ServiceFeatures = () => {
         ))}
       </div>
     </section>
+    <Footer />
+    </>
   );
 };
 
