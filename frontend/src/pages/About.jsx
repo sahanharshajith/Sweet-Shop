@@ -1,8 +1,5 @@
 import React from 'react';
-import cakeImage from '../assets/cakeImage.avif';
-import starSweetImage from '../assets/starSweetImage.avif'; 
-import logoImage from '../assets/logoImage.jpg';
-import citrusImage from '../assets/citrusImage.jpeg';
+import { assets } from '../assets/assets';
 
 const AboutUs = () => {
   return (
@@ -20,10 +17,10 @@ const AboutUs = () => {
 
       <div className="flex flex-col md:flex-row gap-8 mb-12 items-center">
         <div className="grid grid-cols-2 gap-4">
-          <img src={cakeImage} alt="Cake" className="w-48 h-48 object-cover rounded shadow-lg" />
-          <img src={starSweetImage} alt="Star sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
-          <img src={citrusImage} alt="Citrus sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
-          <img src={logoImage} alt="Logo" className="w-48 h-48 object-cover rounded shadow-lg" />
+          <img src={assets.cakeImage} alt="Cake" className="w-48 h-48 object-cover rounded shadow-lg" />
+          <img src={assets.starSweetImage} alt="Star sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
+          <img src={assets.citrusImage} alt="Citrus sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
+          <img src={assets.logoImage} alt="Logo" className="w-48 h-48 object-cover rounded shadow-lg" />
         </div>
 
         <div className="md:w-1/2 text-gray-700 text-lg leading-relaxed md:text-left">

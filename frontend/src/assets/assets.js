@@ -4,6 +4,10 @@ import profile_icon from './profile_icon.png'
 import menu_icon from './menu_icon.png'
 import dropdown_icon from './dropdown_icon.png'
 import hero_image from './hero_image.jpg'
+import cakeImage from '../assets/cakeImage.avif';
+import starSweetImage from '../assets/starSweetImage.avif'; 
+import logoImage from '../assets/logoImage.jpg';
+import citrusImage from '../assets/citrusImage.jpeg';
 
 export const assets = {
     logo,
@@ -12,5 +16,9 @@ export const assets = {
     menu_icon,
     dropdown_icon,
     hero_image,
+    cakeImage,
+    starSweetImage, 
+    logoImage,
+    citrusImage
 }
 
