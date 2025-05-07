@@ -8,6 +8,7 @@ import cakeImage from '../assets/cakeImage.avif';
 import starSweetImage from '../assets/starSweetImage.avif'; 
 import logoImage from '../assets/logoImage.jpg';
 import citrusImage from '../assets/citrusImage.jpeg';
+import profile from '../assets/profileicon.png';
 
 export const assets = {
     logo,
@@ -19,6 +20,7 @@ export const assets = {
     cakeImage,
     starSweetImage, 
     logoImage,
-    citrusImage
+    citrusImage,
+    profile
 }
 

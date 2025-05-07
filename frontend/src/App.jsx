@@ -9,6 +9,7 @@ import Menu from './pages/Menu'
 import Product from './pages/Product'
 import Service from './pages/Service'
 import NavBar from './components/NavBar'
+import OurTeam from './components/OurTeam'
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/product' element={<Product />} />
+        <Route path='/ourteam' element={<OurTeam />} />
         <Route path='/service' element={<Service />} />
       </Routes>
       
