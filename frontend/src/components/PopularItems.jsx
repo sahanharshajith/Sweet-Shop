@@ -41,7 +41,7 @@ const PopularItems = () => {
               />
               <button
                 onClick={() => handleAddToCart(item)}
-                className="bg-green-200 hover:bg-green-300 px-3 py-1 rounded text-lg"
+                className="bg-green-800 hover:bg-green-200 px-3 py-1 rounded text-lg"
               >
                 🛒
               </button>
@@ -57,7 +57,7 @@ const PopularItems = () => {
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-1.5">
             <path fill-rule="evenodd" d="M16.72 7.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H3a.75.75 0 0 1 0-1.5h16.19l-2.47-2.47a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
           </svg>
-          
+
         </button>
       </div>
 
