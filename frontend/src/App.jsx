@@ -4,12 +4,14 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Cart from './pages/Cart'
 import Contact from './pages/Contact'
-import Login from './pages/Login'
+import AuthForm from './components/AuthForm'
 import Menu from './pages/Menu'
 import Product from './pages/Product'
 import Service from './pages/Service'
 import NavBar from './components/NavBar'
 import OurTeam from './components/OurTeam'
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
 
 const App = () => {
   return (
@@ -20,11 +22,13 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/authform' element={<AuthForm />} />
         <Route path='/menu' element={<Menu />} />
         <Route path='/product' element={<Product />} />
         <Route path='/ourteam' element={<OurTeam />} />
         <Route path='/service' element={<Service />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
       
     </div>
