@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
 import Footer from '../components/Footer';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
@@ -23,7 +24,6 @@ export default function CartPage() {
   useEffect(() => {
     localStorage.setItem('sweetCart', JSON.stringify(cartItems));
     updateCartCount(cartItems);
-
     const event = new CustomEvent('cartUpdated');
     window.dispatchEvent(event);
   }, [cartItems]);
@@ -31,16 +31,22 @@ export default function CartPage() {
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
   };
-
+  
   const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    const updatedItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedItems);
+    toast.success('Item removed from cart');
+  };
+
+  const removeAllItems = () => {
+    setCartItems([]);
+    toast.success('All items removed from cart');
   };
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
-    
     setCartItems(cartItems.map(item => 
-      item.id === id ? {...item, quantity: newQuantity} : item
+      item.id === id ? { ...item, quantity: newQuantity } : item
     ));
   };
 
@@ -54,16 +60,18 @@ export default function CartPage() {
 
   return (
     <>
+      <Toaster position="top-right" />
       <div className="bg-[#e4e4e4] min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+          {/* Header Section */}
           <div className="text-center mb-8">
-            <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-4">
+            <h2 className="text-red-600 text-xl sm:text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-2 sm:my-4">
               Sweet Cart
             </h2>
-            <div className="flex justify-center items-center">
-              <h3 className="text-3xl text-black font-bold">Your Items</h3>
-              <div className="relative ml-4">
-                <ShoppingCart className="h-6 w-6 text-gray-700" />
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
+              <h3 className="text-2xl sm:text-3xl text-black font-bold">Your Items</h3>
+              <div className="relative">
+                <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 text-gray-700" />
                 {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                     {cartCount}
@@ -73,102 +81,172 @@ export default function CartPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          {/* Cart Content */}
+          <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
             {cartItems.length === 0 ? (
               <div className="text-center py-8">
                 <div className="flex justify-center mb-4">
                   <div className="relative">
-                    <ShoppingCart className="h-16 w-16 text-gray-400" />
-                    <span className="absolute top-0 right-0 text-2xl text-gray-400">?</span>
+                    <ShoppingCart className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
+                    <span className="absolute top-0 right-0 text-xl sm:text-2xl text-gray-400">?</span>
                   </div>
                 </div>
-                <p className="text-gray-500">No items in the cart.</p>
+                <p className="text-gray-500 text-sm sm:text-base">No items in the cart.</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3">Item</th>
-                      <th className="text-center py-3">Qty</th>
-                      <th className="text-right py-3">Amount</th>
-                      <th className="text-right py-3">Remove</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartItems.map((item) => (
-                      <tr key={item.id} className="border-b border-gray-200">
-                        <td className="py-4">
-                          <div className="flex items-center">
-                            {item.image && (
-                              <img 
-                                src={item.image} 
-                                alt={item.name}
-                                className="w-12 h-12 rounded object-cover mr-4"
-                              />
-                            )}
-                            <div>
-                              <h3 className="font-medium text-gray-800">{item.name}</h3>
-                              <p className="text-gray-500 text-sm">Rs {item.price.toFixed(2)}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4">
-                          <div className="flex items-center justify-center">
-                            <button 
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="bg-gray-200 px-2 py-1 rounded-l"
-                            >
-                              -
-                            </button>
-                            <span className="px-4 py-1 bg-gray-100">{item.quantity}</span>
-                            <button 
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="bg-gray-200 px-2 py-1 rounded-r"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </td>
-                        <td className="py-4 text-right">
-                          Rs {(item.price * item.quantity).toFixed(2)}
-                        </td>
-                        <td className="py-4 text-right">
-                          <button 
-                            onClick={() => removeItem(item.id)}
-                            className="text-red-500 hover:text-red-700"
-                          >
-                            <Trash2 className="h-5 w-5" />
-                          </button>
-                        </td>
+              <>
+                {/* Desktop Table View */}
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-3 px-2">Item</th>
+                        <th className="text-center py-3 px-2">Qty</th>
+                        <th className="text-right py-3 px-2">Amount</th>
+                        <th className="text-right py-3 px-2">Remove</th>
                       </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr className="border-t-2 border-gray-200">
-                      <td colSpan="2" className="py-4 text-right font-medium">Total Price</td>
-                      <td className="py-4 text-right font-medium">Rs {calculateTotal()}</td>
-                      <td></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {cartItems.map((item) => (
+                        <tr key={item.id} className="border-b border-gray-200">
+                          <td className="py-4 px-2">
+                            <div className="flex items-center">
+                              {item.image && (
+                                <img
+                                  src={item.image}
+                                  alt={item.name}
+                                  className="w-10 h-10 sm:w-12 sm:h-12 rounded object-cover mr-3 sm:mr-4"
+                                />
+                              )}
+                              <div>
+                                <h3 className="font-medium text-gray-800 text-sm sm:text-base">{item.name}</h3>
+                                <p className="text-gray-500 text-xs sm:text-sm">Rs {item.price.toFixed(2)}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-4 px-2">
+                            <div className="flex items-center justify-center">
+                              <button
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                className="bg-gray-200 px-2 py-1 rounded-l text-sm"
+                              >
+                                -
+                              </button>
+                              <span className="px-3 sm:px-4 py-1 bg-gray-100 text-sm sm:text-base">{item.quantity}</span>
+                              <button
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                className="bg-gray-200 px-2 py-1 rounded-r text-sm"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-4 px-2 text-right text-sm sm:text-base">
+                            Rs {(item.price * item.quantity).toFixed(2)}
+                          </td>
+                          <td className="py-4 px-2 text-right">
+                            <button
+                              onClick={() => removeItem(item.id)}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr className="border-t-2 border-gray-200">
+                        <td colSpan="2" className="py-4 text-right font-medium text-sm sm:text-base">Total Price</td>
+                        <td className="py-4 px-2 text-right font-medium text-sm sm:text-base">Rs {calculateTotal()}</td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                {/* Mobile List View */}
+                <div className="sm:hidden space-y-4">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="border-b border-gray-200 pb-4">
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center">
+                          {item.image && (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-10 h-10 rounded object-cover mr-3"
+                            />
+                          )}
+                          <div>
+                            <h3 className="font-medium text-gray-800 text-sm">{item.name}</h3>
+                            <p className="text-gray-500 text-xs">Rs {item.price.toFixed(2)}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="text-red-500"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <div className="flex justify-between items-center mt-2">
+                        <div className="flex items-center">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="bg-gray-200 px-2 py-1 rounded-l text-xs"
+                          >
+                            -
+                          </button>
+                          <span className="px-3 py-1 bg-gray-100 text-xs">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="bg-gray-200 px-2 py-1 rounded-r text-xs"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <span className="text-sm font-medium">
+                          Rs {(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                    <span className="font-medium text-sm">Total Price</span>
+                    <span className="font-medium text-sm">Rs {calculateTotal()}</span>
+                  </div>
+                </div>
+
+                {/* Remove All Button */}
+                {cartItems.length > 0 && (
+                  <div className="text-right mt-4">
+                    <button
+                      onClick={removeAllItems}
+                      className="bg-red-500 hover:bg-red-600 text-white py-2 px-3 sm:px-4 rounded-md text-sm sm:text-base"
+                    >
+                      Remove All Items
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button 
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <button
               onClick={goBackToShop}
-              className="bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-md flex items-center justify-center transition-colors sm:flex-1"
+              className="bg-gray-500 hover:bg-gray-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md flex items-center justify-center transition-colors sm:flex-1 text-sm sm:text-base"
             >
-              <ArrowLeft className="h-5 w-5 mr-2" />
+              <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               BACK TO SHOP
             </button>
-            
+
             {cartItems.length > 0 && (
-              <button 
+              <button
                 onClick={handleCheckout}
-                className="bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-md transition-colors sm:w-48"
+                className="bg-amber-500 hover:bg-amber-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md transition-colors text-sm sm:text-base sm:w-48"
               >
                 CHECKOUT
               </button>

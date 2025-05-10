@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { menuItems, categories } from '../assets/assets';
 import Footer from '../components/Footer';
+import toast, { Toaster } from 'react-hot-toast';
 
 const FoodMenu = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -13,10 +14,8 @@ const FoodMenu = () => {
     setCartCount(count);
   }, []);
 
-
   useEffect(() => {
     updateCartCount();
-
     window.addEventListener('cartUpdated', updateCartCount);
     return () => {
       window.removeEventListener('cartUpdated', updateCartCount);
@@ -24,13 +23,20 @@ const FoodMenu = () => {
   }, [updateCartCount]);
 
   const handleChange = (id, value) => {
-    setQuantities((prev) => ({ ...prev, [id]: value }));
+    if (/^\d*$/.test(value)) {
+      setQuantities((prev) => ({ ...prev, [id]: value }));
+    }
   };
 
   const handleAddToCart = (item) => {
     const quantity = parseInt(quantities[item.id]) || 1;
-    const currentCart = JSON.parse(localStorage.getItem('sweetCart')) || [];
 
+    if (quantity <= 0) {
+      toast.error("Please enter a valid quantity.");
+      return;
+    }
+
+    const currentCart = JSON.parse(localStorage.getItem('sweetCart')) || [];
     const existingItemIndex = currentCart.findIndex(cartItem => cartItem.id === item.id);
 
     if (existingItemIndex >= 0) {
@@ -46,13 +52,10 @@ const FoodMenu = () => {
     }
 
     localStorage.setItem('sweetCart', JSON.stringify(currentCart));
-
     updateCartCount();
-
     window.dispatchEvent(new CustomEvent('cartUpdated'));
 
-    //alert(`Added ${quantity} x ${item.name} to cart!`);
-
+    toast.success(`${item.name} added to cart!`);
     setQuantities((prev) => ({ ...prev, [item.id]: "" }));
   };
 
@@ -62,6 +65,7 @@ const FoodMenu = () => {
 
   return (
     <>
+      <Toaster position="top-right"/>
       <div className="max-w-6xl mx-auto px-4 py-8 bg-[#e4e4e4]">
         <div className="flex justify-between items-center mb-8">
           <div className="text-center flex-1">

@@ -31,6 +31,14 @@ import Boondi from '../assets/Boondi.png';
 import Marshmallows from '../assets/Marshmallows.jpg';
 import SeeniMurukku from '../assets/Seeni Murukku.png';
 import SeeniPathuru from '../assets/Seeni Pathuru.png';
+import Dodol from '../assets/Dodol.png';
+import CashewDodol from '../assets/Dodol With Cashew.jpg';
+import Halapa from '../assets/Halapa.webp';
+import PeniWalalu from '../assets/Peni Walalu.jpg';
+import RulanAluwa from '../assets/Rulan Aluwa.png';
+import Thalaguli from '../assets/Thala guli.png';
+import Thalakerali from '../assets/Thala kerali.jpg';
+import Welithalapa from '../assets/Welithalapa.png';
 
 export const assets = {
     logo,
@@ -282,6 +290,71 @@ export const menuItems = [
         image: Marshmallows,
         category: "Other"
     },
+    {
+        id: 23,
+        name: "Dodol(1Kg)",
+        price: 1600,
+        quantity: 1,
+        image: Dodol,
+        category: "Local sweets"
+    },
+    {
+        id: 24,
+        name: "Dodol With Cashew(1Kg)",
+        price: 1950,
+        quantity: 1,
+        image: CashewDodol,
+        category: "Local sweets"
+    },
+    {
+        id: 25,
+        name: "Halapa",
+        price: 70,
+        quantity: 1,
+        image: Halapa,
+        category: "Local sweets"
+    },
+    {
+        id: 26,
+        name: "Peni Walalu",
+        price: 60,
+        quantity: 1,
+        image: PeniWalalu,
+        category: "Local sweets"
+    },
+    {
+        id: 27,
+        name: "Rulan Aluwa",
+        price: 50,
+        quantity: 1,
+        image: RulanAluwa,
+        category: "Local sweets"
+    },
+    {
+        id: 28,
+        name: "Thalaguli",
+        price: 50,
+        quantity: 1,
+        image: Thalaguli,
+        category: "Local sweets"
+    },
+    {
+        id: 29,
+        name: "Thalakerali",
+        price: 20,
+        quantity: 1,
+        image: Thalakerali,
+        category: "Local sweets"
+    },
+    {
+        id: 30,
+        name: "Welithalapa",
+        price: 60,
+        quantity: 1,
+        image: Welithalapa,
+        category: "Local sweets"
+    },
+
 ];
   
 export const categories = [
