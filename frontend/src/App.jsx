@@ -12,6 +12,7 @@ import NavBar from './components/NavBar'
 import OurTeam from './components/OurTeam'
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import Payment from './pages/payment';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path='/service' element={<Service />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path='/payment' element={<Payment />} />
       </Routes>
       
     </div>

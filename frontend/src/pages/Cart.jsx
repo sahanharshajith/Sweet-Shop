@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
 import Footer from '../components/Footer';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
@@ -244,12 +245,14 @@ export default function CartPage() {
             </button>
 
             {cartItems.length > 0 && (
-              <button
+              <Link to="/payment">
+                <button
                 onClick={handleCheckout}
                 className="bg-amber-500 hover:bg-amber-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md transition-colors text-sm sm:text-base sm:w-48"
               >
                 CHECKOUT
               </button>
+              </Link>
             )}
           </div>
         </div>
