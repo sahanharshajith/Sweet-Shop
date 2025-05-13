@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { menuItems, categories } from '../assets/assets';
-import Footer from '../components/Footer';
 import toast, { Toaster } from 'react-hot-toast';
 
 const FoodMenu = () => {
@@ -130,7 +129,6 @@ const FoodMenu = () => {
           </div>
         )}
       </div>
-      <Footer />
     </>
   );
 };

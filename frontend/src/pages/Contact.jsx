@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Phone, Mail } from 'lucide-react';
-import Footer from '../components/Footer';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -122,7 +121,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

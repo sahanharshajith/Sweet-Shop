@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaUserTie, FaUtensils, FaShoppingCart, FaHeadset } from 'react-icons/fa';
-import Footer from '../components/Footer';
 
 const features = [
   {
@@ -52,7 +51,6 @@ const ServiceFeatures = () => {
         ))}
       </div>
     </section>
-    <Footer />
     </>
   );
 };

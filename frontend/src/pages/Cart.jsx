@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
-import Footer from '../components/Footer';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +63,6 @@ export default function CartPage() {
       <Toaster position="top-right" />
       <div className="bg-[#e4e4e4] min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-          {/* Header Section */}
           <div className="text-center mb-8">
             <h2 className="text-red-600 text-xl sm:text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-2 sm:my-4">
               Sweet Cart
@@ -82,7 +80,6 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Cart Content */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
             {cartItems.length === 0 ? (
               <div className="text-center py-8">
@@ -96,7 +93,6 @@ export default function CartPage() {
               </div>
             ) : (
               <>
-                {/* Desktop Table View */}
                 <div className="hidden sm:block overflow-x-auto">
                   <table className="w-full">
                     <thead>
@@ -166,7 +162,6 @@ export default function CartPage() {
                   </table>
                 </div>
 
-                {/* Mobile List View */}
                 <div className="sm:hidden space-y-4">
                   {cartItems.map((item) => (
                     <div key={item.id} className="border-b border-gray-200 pb-4">
@@ -219,7 +214,6 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                {/* Remove All Button */}
                 {cartItems.length > 0 && (
                   <div className="text-right mt-4">
                     <button
@@ -234,7 +228,6 @@ export default function CartPage() {
             )}
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button
               onClick={goBackToShop}
@@ -257,7 +250,6 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

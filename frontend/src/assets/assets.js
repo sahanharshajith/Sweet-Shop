@@ -104,6 +104,41 @@ export const popularItems = [
       image: KaluAggala,
     },
 ];
+
+export const bestSellingItems = [
+    {
+      id: 2,
+      name: "Mun kewum",
+      price: 50,
+      quantity: 1,
+      image: Munkewum,
+      category: "Local sweets",
+    },
+    {
+        id: 9,
+        name: "Butter Cake (1Kg)",
+        price: 1600,
+        quantity: 1,
+        image: ButterCake,
+        category: "Cakes"
+    },
+    {
+      id: 3,
+      name: "Kokis",
+      price: 30,
+      quantity: 1,
+      image: Kokis,
+      category: "Local sweets",
+    },
+    {
+        id: 11,
+        name: "Chocolate Cake (1kg)",
+        price: 1950,
+        quantity: 1,
+        image: ChocolateCake,
+        category: "Cakes"
+    },
+];
   
 export const menuItems = [
     {
@@ -365,4 +400,3 @@ export const categories = [
     "Extra",
     "Other"
 ];
-  

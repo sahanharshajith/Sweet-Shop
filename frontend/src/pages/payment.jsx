@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, CreditCard, User, Phone, MapPin, CheckCircle } from 'lucide-react';
-import Footer from '../components/Footer';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function PaymentPage() {
@@ -556,7 +555,6 @@ export default function PaymentPage() {
           )}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

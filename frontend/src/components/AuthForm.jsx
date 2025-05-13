@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from './Footer';
 
 const AuthForm = ({ type = 'signin' }) => {
   const [formData, setFormData] = useState({
@@ -143,7 +142,6 @@ const AuthForm = ({ type = 'signin' }) => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

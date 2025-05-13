@@ -1,6 +1,5 @@
 import React from 'react';
 import { assets } from '../assets/assets';
-import Footer from '../components/Footer';
 
 const AboutUs = () => {
   return (
@@ -53,7 +52,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };
