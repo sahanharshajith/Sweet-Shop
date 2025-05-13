@@ -38,7 +38,7 @@ const BestSeller = () => {
   };
 
   return (
-    <section className="p-8 bg-[#e4e4e4] min-h-screen">
+    <section className="pt-8 pb-12 px-8 bg-[#e4e4e4]">
       <Toaster position="top-right" toastOptions={{ duration: 2500 }} />
 
       <div className="flex justify-center mb-6">

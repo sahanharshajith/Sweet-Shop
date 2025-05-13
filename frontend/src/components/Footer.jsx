@@ -1,44 +1,10 @@
-import { useState } from 'react';
+import React from 'react';
 import { Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Subscribing email:', email);
-    alert('Thank you for subscribing!');
-    setEmail('');
-  };
 
   return (
-    <footer className="bg-[#0f1b33] text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto text-center mb-8">
-          <h2 className="text-2xl font-bold mb-4">Want Us to email you ocassionally with Sweet Hut News?</h2>
-          <form className="flex max-w-md mx-auto" onSubmit={handleSubmit}>
-            <input 
-            type="email" 
-            placeholder="Email" 
-            className="flex-grow p-2 text-black bg-white outline-none" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            />
-            <button 
-            type="submit" 
-            className="bg-red-500 text-white px-4 py-2 font-semibold hover:bg-red-600 transition-colors"
-            >
-            SIGN UP
-            </button>
-          </form>
-        </div>
-
-      <div className="max-w-4xl mx-auto text-center mb-8">
-        <p>
-          Discover Sri Lanka's top sweet shop - Sweet Hut! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Sweet Hut today!
-        </p>
-      </div>
-
+    <footer className="bg-[#1a2e50] text-white py-8 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
         <div className="text-center">
           <h3 className="font-bold mb-4 relative inline-block">
