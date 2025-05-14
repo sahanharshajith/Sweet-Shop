@@ -8,10 +8,10 @@ const Hero = () => {
       <div className="w-full sm:w-1/2 flex items-center justify-center py-12 px-6 sm:px-10">
         <div className="text-[#333] text-center sm:text-left max-w-lg">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-snug righteous-regular">
-            Your Dessert Specialist
+            Your Cake Haven
           </h1>
           <p className="text-base sm:text-lg text-gray-700 mb-6">
-            Discover Sri Lanka's top cake shop - <span className="text-red-500 font-semibold">Fluffy Delights</span>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Fluffy Delights today!
+            Discover Sri Lanka's favorite cake shop - <span className="text-red-500 font-semibold">Fluffy Delights</span>! We bake with love, using premium ingredients and time-honored recipes to create mouthwatering cakes for every occasion. From classic favorites to custom creations, indulge in sweetness at Fluffy Delights today!
           </p>
           <button 
             onClick={() => window.location.href = '/menu'} 
