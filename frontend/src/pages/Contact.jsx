@@ -55,12 +55,11 @@ export default function ContactPage() {
                   </h2>
                   <div className="flex items-center mt-3">
                     <Mail className="text-red-500 mr-2" size={20} />
-                    <span className="text-gray-700">sweethut.lk@gmail.com</span>
+                    <span className="text-gray-700">fluffydelights.lk@gmail.com</span>
                   </div>
                 </div>
               </div>
 
-              {/* Google Map */}
               <div className="w-full h-48 md:h-72 rounded-lg overflow-hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.935847123456!2d79.904709!3d6.888115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a0e1d815def%3A0xecf6edfdd056ab67!2sSweet%20Hut!5e0!3m2!1sen!2slk!4v1691234567890!5m2!1sen!2slk"
@@ -73,7 +72,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact Form */}
             <div>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

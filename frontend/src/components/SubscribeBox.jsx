@@ -12,10 +12,9 @@ const SubscribeBox = () => {
 
   return (
     <div className='bg-[#e4e4e4] text-gray-700 pt-2 pb-10 px-4'>
-      {/* Subscribe Section */}
       <div className="max-w-6xl mx-auto text-center mb-8">
         <h2 className="text-2xl md:text-3xl font-bold mb-4">
-          Want us to email you occasionally with Sweet Hut news?
+          Want us to email you occasionally with Fluffy Delights news?
         </h2>
         <form
           className="flex flex-col sm:flex-row max-w-md mx-auto gap-2"
@@ -38,10 +37,9 @@ const SubscribeBox = () => {
         </form>
       </div>
 
-      {/* Description Section */}
       <div className="max-w-4xl mx-auto text-center text-sm text-gray-600 px-4">
         <p>
-          Discover Sri Lanka's top sweet shop – <strong>Sweet Hut</strong>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Sweet Hut today!
+          Discover Sri Lanka's top sweet shop – <strong>Fluffy Delights</strong>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Sweet Hut today!
         </p>
       </div>
     </div>

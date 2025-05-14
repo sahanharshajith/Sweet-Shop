@@ -50,7 +50,7 @@ export default function Footer() {
           <ul className="space-y-2">
             <li className="flex items-center justify-center">
               <Mail size={16} className="mr-2" />
-              <a href="mailto:sweethut.lk@gmail.com" className="hover:text-red-300">sweethut.lk@gmail.com</a>
+              <a href="mailto:sweethut.lk@gmail.com" className="hover:text-red-300">Fluffydelights.lk@gmail.com</a>
             </li>
             <li className="flex items-center justify-center">
               <Phone size={16} className="mr-2" />
@@ -93,7 +93,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center">
-        <p>© Copyright All Rights Reserved: Visual Soft</p>
+        <p>© Copyright All Rights Reserved: Fluffy Delights</p>
       </div>
     </footer>
   );

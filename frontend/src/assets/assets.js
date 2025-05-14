@@ -1,4 +1,4 @@
-import logo from './logo.png'
+import logo from './fluffy_delights_logo.png'
 import cart_icon from './cart_icon.png'
 import profile_icon from './profile_icon.png'
 import menu_icon from './menu_icon.png'

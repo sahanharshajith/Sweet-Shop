@@ -13,7 +13,7 @@ const AboutUs = () => {
         </div>
 
         <div className="text-4xl font-bold mb-6 text-gray-800">
-          Welcome to <span role="img" aria-label="fork and knife">🍴</span> <span className="text-blue-900">Sweet Hut</span>
+          Welcome to <span role="img" aria-label="fork and knife">🍴</span> <span className="text-blue-900">Fluffy Delights</span>
         </div>
 
         <div className="flex flex-col md:flex-row gap-8 mb-12 items-center">

@@ -11,7 +11,7 @@ const Hero = () => {
             Your Dessert Specialist
           </h1>
           <p className="text-base sm:text-lg text-gray-700 mb-6">
-            Discover Sri Lanka's top sweet shop - <span className="text-red-500 font-semibold">Sweet Hut</span>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Sweet Hut today!
+            Discover Sri Lanka's top cake shop - <span className="text-red-500 font-semibold">Fluffy Delights</span>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Fluffy Delights today!
           </p>
           <button 
             onClick={() => window.location.href = '/menu'} 
