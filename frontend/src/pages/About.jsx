@@ -26,7 +26,7 @@ const AboutUs = () => {
 
           <div className="md:w-1/2 text-gray-700 text-lg leading-relaxed md:text-left">
             <p className="mb-4 text-center">
-              Where every cake is a celebration and every slice tells a story.
+              Where every cake is a celebration and every slice tells a story. <br />
               At Fluffy Delights, we're passionate about baking cakes that not only taste divine but also create unforgettable moments. From rich chocolate layers to delicately frosted fruit cakes, we blend the finest ingredients with timeless techniques and modern flair.
             </p>
             <p className="mb-4 text-center">
