@@ -39,7 +39,7 @@ const SubscribeBox = () => {
 
       <div className="max-w-4xl mx-auto text-center text-sm text-gray-600 px-4">
         <p>
-          Discover Sri Lanka's top sweet shop – <strong>Fluffy Delights</strong>! We blend tradition with the finest ingredients to craft irresistible local and international sweets. Satisfy your cravings at Sweet Hut today!
+          Discover Sri Lanka's favorite cake haven – <strong>Fluffy Delights</strong>! From rich, decadent cakes to delicate cupcakes, we craft every treat with love and the finest ingredients. Indulge in heavenly bakes that blend classic flavors with a modern twist – only at Fluffy Delights.
         </p>
       </div>
     </div>
