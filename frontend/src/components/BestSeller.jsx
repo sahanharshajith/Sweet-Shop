@@ -43,7 +43,7 @@ const BestSeller = () => {
 
       <div className="flex justify-center mb-6">
         <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1">
-          Best Selling Items
+          New Arrivals
         </h2>
       </div>
 

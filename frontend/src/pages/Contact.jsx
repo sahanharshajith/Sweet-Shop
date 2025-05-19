@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Phone, Mail } from 'lucide-react';
+import SubscribeBox from '../components/SubscribeBox';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -119,6 +120,7 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+      <SubscribeBox />
     </>
   );
 }

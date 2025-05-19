@@ -39,6 +39,18 @@ import RulanAluwa from '../assets/Rulan Aluwa.png';
 import Thalaguli from '../assets/Thala guli.png';
 import Thalakerali from '../assets/Thala kerali.jpg';
 import Welithalapa from '../assets/Welithalapa.png';
+import blueberryCheesecake from '../assets/No Bake Cheesecake Cup – blueberry.jpg';
+import congratsBento from '../assets/Congrats Bento Bundle.webp';
+import thankYouBento from '../assets/Thank You Bento Bundle.webp';
+import HBDbento from '../assets/HBD Bento Bundle.jpeg';
+import CakeTruffles from '../assets/Cake Truffles.webp';
+import CakePops from '../assets/Cake Pops.webp';
+import OriginalChocolate from '../assets/Original Chocolate.webp';
+import OriginalVanilla from '../assets/Original Vanilla.webp';
+import SignatureCake  from '../assets/Signature Chocolate Cake.webp';
+import CookieCream from '../assets/Cookie & Cream.webp';
+import RedVelvet from '../assets/Red Velvet.webp';
+import PackofCupcakes from '../assets/12 Pack of Cupcakes.webp';
 
 export const assets = {
     logo,
@@ -56,87 +68,79 @@ export const assets = {
 
 export const popularItems = [
     {
-      id: 1,
-      name: "Konda kewum",
+      id: 35,
+      name: "Cake Truffles",
+      price: 120,
+      image: CakeTruffles,
+    },
+    {
+      id: 36,
+      name: "Cake Pops",
+      price: 150,
+      image: CakePops,
+    },
+    {
+      id: 37,
+      name: "Original Chocolate",
+      price: 250,
+      image: OriginalChocolate,
+    },
+    {
+      id: 38,
+      name: "Original Vanilla",
+      price: 250,
+      image: OriginalVanilla,
+    },
+    {
+      id: 39,
+      name: "Signature Chocolate Cake",
+      price: 2150,
+      image: SignatureCake,
+    },
+    {
+      id: 40,
+      name: "Red Velvet",
+      price: 300,
+      image: RedVelvet,
+    },
+    {
+      id: 41,
+      name: "Cookie & Cream",
+      price: 250,
+      image: CookieCream,
+    },
+    {
+      id: 42,
+      name: "12 Pack of Cupcakes",
       price: 50,
-      image: Kondakewm,
-    },
-    {
-      id: 2,
-      name: "Mun kewum",
-      price: 50,
-      image: Munkewum,
-    },
-    {
-      id: 3,
-      name: "Kokis",
-      price: 30,
-      image: Kokis,
-    },
-    {
-      id: 4,
-      name: "Athirasa",
-      price: 50,
-      image: Athirasa,
-    },
-    {
-      id: 5,
-      name: "Aasmee",
-      price: 130,
-      image: Aasmee,
-    },
-    {
-      id: 6,
-      name: "Naran Kewum",
-      price: 50,
-      image: NaranKewm,
-    },
-    {
-      id: 7,
-      name: "Aluva",
-      price: 50,
-      image: Aluva,
-    },
-    {
-      id: 8,
-      name: "Kalu Aggala",
-      price: 50,
-      image: KaluAggala,
+      image: PackofCupcakes,
     },
 ];
 
 export const bestSellingItems = [
     {
-      id: 2,
-      name: "Mun kewum",
-      price: 50,
-      quantity: 1,
-      image: Munkewum,
-      category: "Local sweets",
+      id: 31,
+      name: "Cheesecake Cup – blueberry",
+      price: 790,
+      image: blueberryCheesecake,
     },
     {
-        id: 9,
-        name: "Butter Cake (1Kg)",
-        price: 1600,
-        quantity: 1,
-        image: ButterCake,
-        category: "Cakes"
+      id: 32,
+      name: "Congrats Bento Bundle",
+      price: 2750,
+      image: congratsBento,
     },
     {
-      id: 3,
-      name: "Kokis",
-      price: 30,
-      quantity: 1,
-      image: Kokis,
-      category: "Local sweets",
+      id: 33,
+      name: "Thank You Bento Bundle",
+      price: 2750,
+      image: thankYouBento,
     },
     {
-        id: 11,
-        name: "Chocolate Cake (1kg)",
-        price: 1950,
-        quantity: 1,
-        image: ChocolateCake,
-        category: "Cakes"
+      id: 34,
+      name: "HBD Bento Bundle",
+      price: 1750,
+      image: HBDbento,
     },
 ];
   
@@ -145,28 +149,22 @@ export const menuItems = [
       id: 1,
       name: "Konda kewum",
       price: 50,
-      quantity: 3,
       image: Kondakewm,
       category: "Local sweets",
-      description: "Traditional Sri Lankan sweet made with rice flour and treacle"
     },
     {
       id: 2,
-      name: "Mun kewum",
-      price: 50,
-      quantity: 1,
-      image: Munkewum,
+      name: "No Bake Cheesecake Cup – blueberry",
+      price: 790,
+      image: blueberryCheesecake,
       category: "Local sweets",
-      description: "Sweet coconut-based Sri Lankan delicacy"
     },
     {
       id: 3,
       name: "Kokis",
       price: 30,
-      quantity: 1,
       image: Kokis,
       category: "Local sweets",
-      description: "Crispy deep-fried snack shaped like a flower"
     },
     {
       id: 4,
@@ -394,9 +392,9 @@ export const menuItems = [
   
 export const categories = [
     "All",
-    "Local sweets",
+    "Cupcakes",
     "Cakes",
-    "Toffee",
-    "Extra",
+    "Desserts",
+    "Cookies",
     "Other"
 ];
