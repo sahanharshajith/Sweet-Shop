@@ -1,35 +1,37 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { backendUrl } from '../App';
- import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Required for styles
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // Removed unused error state
 
   const handleSubmit = async (e) => {
-
+    e.preventDefault();
     try {
-      e.preventDefault();
-      const response = await axios.post(`${backendUrl}/api/user/admin`, { email, password });
+      const response = await axios.post(`${backendUrl}/api/user/admin`, { email, password }, {
+        withCredentials: true
+      });
 
       if (response.data.success) {
         setToken(response.data.token);
+        toast.success("Login successful");
       } else {
         toast.error(response.data.message);
       }
     } catch (err) {
       console.error(err);
-      toast.error(err.message);
+      toast.error(err.response?.data?.message || "Network Error");
     }
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-white">
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="bg-gray-300 p-8 rounded-lg shadow-md w-80">
         <h2 className="text-2xl font-semibold mb-6 text-center">Admin Login</h2>
-        {/* Removed unused error display */}
         <input
           type="email"
           placeholder="Email"
@@ -48,7 +50,7 @@ const Login = ({ setToken }) => {
         />
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded transition"
+          className="w-full bg-blue-600 text-white py-2 rounded transition"
         >
           Login
         </button>

@@ -9,9 +9,9 @@ import productRouter from './routes/productRoute.js';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Allow requests from your frontend origin and enable credentials if needed
+// CORS setup
 app.use(cors({
-  origin: 'http://localhost:5175',
+  origin: 'http://localhost:5174',
   credentials: true
 }));
 
