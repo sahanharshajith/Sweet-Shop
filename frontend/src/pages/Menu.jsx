@@ -1,11 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
-import { menuItems, categories } from '../assets/assets';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 const FoodMenu = () => {
+  const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [quantities, setQuantities] = useState({});
   const [cartCount, setCartCount] = useState(0);
+  const [categories, setCategories] = useState([]);
 
   const updateCartCount = useCallback(() => {
     const cart = JSON.parse(localStorage.getItem('sweetCart')) || [];
@@ -20,6 +22,30 @@ const FoodMenu = () => {
       window.removeEventListener('cartUpdated', updateCartCount);
     };
   }, [updateCartCount]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/api/product/list');
+        const fetchedProducts = res.data.products || [];
+        
+        // Ensure all products have unique IDs
+        const productsWithIds = fetchedProducts.map((product, index) => ({
+          ...product,
+          id: product.id || `temp-id-${index}` // Fallback for missing IDs
+        }));
+        
+        setProducts(productsWithIds);
+
+        // Extract unique categories
+        const uniqueCategories = ['All', ...new Set(productsWithIds.map(item => item.category || 'Uncategorized'))];
+        setCategories(uniqueCategories.filter(Boolean));
+      } catch (err) {
+        console.error("Failed to fetch products:", err);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   const handleChange = (id, value) => {
     if (/^\d*$/.test(value)) {
@@ -45,7 +71,7 @@ const FoodMenu = () => {
         id: item.id,
         name: item.name,
         price: parseFloat(item.price),
-        image: item.image,
+        image: item.image1,
         quantity: quantity
       });
     }
@@ -59,12 +85,12 @@ const FoodMenu = () => {
   };
 
   const filteredItems = activeCategory === 'All'
-    ? menuItems
-    : menuItems.filter(item => item.category === activeCategory);
+    ? products
+    : products.filter(item => item.category === activeCategory);
 
   return (
     <>
-      <Toaster position="top-right"/>
+      <Toaster position="top-right" />
       <div className="max-w-6xl mx-auto px-4 py-8 bg-[#e4e4e4]">
         <div className="flex justify-between items-center mb-8">
           <div className="text-center flex-1">
@@ -77,9 +103,9 @@ const FoodMenu = () => {
 
         <div className="flex overflow-x-auto pb-4 mb-8 hide-scrollbar">
           <div className="flex space-x-2 mx-auto">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <button
-                key={category}
+                key={`category-${category || index}`} // Handle undefined categories
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
                   activeCategory === category
@@ -94,10 +120,13 @@ const FoodMenu = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredItems.map((item) => (
-            <div key={item.id} className="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+          {filteredItems.map((item, index) => (
+            <div 
+              key={`product-${item.id || index}`} // Fallback to index if id is missing
+              className="bg-white p-4 rounded shadow text-center hover:shadow-lg transition"
+            >
               <img
-                src={item.image}
+                src={item.image1}
                 alt={item.name}
                 className="h-36 w-auto mx-auto mb-4 object-contain transition-transform hover:scale-105"
               />

@@ -7,45 +7,32 @@ const addProduct = async (req, res) => {
       name,
       price,
       category,
+      bestseller // ✅ receive from frontend
     } = req.body;
 
-    // Extract image paths safely
     const image1 = req.files?.image1?.[0]?.path;
 
-    // Filter out undefined paths
-    const imagePaths = [image1].filter(Boolean);
-
-    if (imagePaths.length === 0) {
-      return res.status(400).json({ success: false, message: 'No image files uploaded.' });
+    if (!image1) {
+      return res.status(400).json({ success: false, message: 'No image uploaded.' });
     }
 
-    // Upload images to Cloudinary
-    const imageUrls = await Promise.all(
-      imagePaths.map(async (filePath) => {
-        const result = await cloudinary.uploader.upload(filePath, {
-          resource_type: 'image'
-        });
-        return result.secure_url;
-      })
-    );
+    // Upload to Cloudinary
+    const uploadedImage = await cloudinary.uploader.upload(image1, {
+      resource_type: 'image'
+    });
 
-    console.log(name, price, category); 
-    console.log(image1);
-    console.log(imageUrls);
-
+    // ✅ Build product data with bestseller and createdAt
     const productData = {
       name,
       price: Number(price),
       category,
-      image: imageUrls,
-      date: Date.now(),
-    }
-    console.log(productData);
+      image1: uploadedImage.secure_url,
+      bestseller: bestseller === 'true' || bestseller === true, // checkbox sends string
+      createdAt: new Date()
+    };
 
     const product = new productModel(productData);
     await product.save();
-
-    // TODO: Save product data along with imageUrls to your DB
 
     res.json({
       success: true,
@@ -56,6 +43,7 @@ const addProduct = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 const listProduct = async (req, res) => {
   try {

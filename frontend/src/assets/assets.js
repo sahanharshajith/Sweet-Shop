@@ -81,7 +81,7 @@ export const popularItems = [
     },
     {
       id: 37,
-      name: "Original Chocolate",
+      name: "Cake Pops",
       price: 250,
       image: OriginalChocolate,
     },

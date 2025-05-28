@@ -1,108 +1,115 @@
-import React, { useState } from "react";
-import { popularItems } from "../assets/assets";
-import toast, { Toaster } from "react-hot-toast";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const PopularItems = () => {
+  const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
 
+  useEffect(() => {
+    const fetchPopular = async () => {
+      try {
+        const res = await axios.get('http://localhost:4000/api/product/list');
+        const all = res.data.products || [];
+        // Sort newest and get top 8
+        const sorted = all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 8);
+        
+        // Add image fallback handling
+        const processedProducts = sorted.map(product => ({
+          ...product,
+          image: product.image1 || '/placeholder-image.jpg'
+        }));
+        
+        setProducts(processedProducts);
+      } catch (err) {
+        console.error("Failed to fetch popular items:", err);
+        toast.error("Failed to load popular items");
+      }
+    };
+    fetchPopular();
+  }, []);
+
   const handleChange = (id, value) => {
-    const numberValue = parseInt(value);
-    if (numberValue >= 1 || value === "") {
+    if (/^\d*$/.test(value)) {
       setQuantities((prev) => ({ ...prev, [id]: value }));
     }
   };
 
   const handleAddToCart = (item) => {
-    const quantity = parseInt(quantities[item.id]) || 1;
+    const quantity = parseInt(quantities[item._id]) || 1;
 
-    if (quantity < 1) {
-      toast.error("Quantity must be at least 1");
+    if (quantity <= 0) {
+      toast.error("Please enter a valid quantity.");
       return;
     }
 
-    const cart = JSON.parse(localStorage.getItem("sweetCart")) || [];
-    const existingIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
+    const currentCart = JSON.parse(localStorage.getItem('sweetCart')) || [];
+    const existingItemIndex = currentCart.findIndex(cartItem => cartItem._id === item._id);
 
-    if (existingIndex !== -1) {
-      cart[existingIndex].quantity += quantity;
+    if (existingItemIndex >= 0) {
+      currentCart[existingItemIndex].quantity += quantity;
     } else {
-      cart.push({ ...item, quantity });
+      currentCart.push({
+        _id: item._id,
+        name: item.name,
+        price: parseFloat(item.price),
+        image: item.image1,
+        quantity: quantity
+      });
     }
 
-    localStorage.setItem("sweetCart", JSON.stringify(cart));
-    window.dispatchEvent(new Event("cartUpdated"));
-
-    setQuantities((prev) => ({ ...prev, [item.id]: "" }));
-
+    localStorage.setItem('sweetCart', JSON.stringify(currentCart));
     toast.success(`${item.name} added to cart!`);
+    setQuantities((prev) => ({ ...prev, [item._id]: "" }));
   };
 
   return (
-    <section className="p-8 bg-[#e4e4e4] min-h-screen">
-      {/* Toast container */}
-      <Toaster position="top-right" toastOptions={{ duration: 2500 }} />
+    <>
+      <Toaster position="top-right" />
+      <div className="max-w-6xl mx-auto px-4 py-8 bg-[#e4e4e4]">
+        <div className="text-center mb-8">
+          <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-4">
+            Popular Items
+          </h2>
+        </div>
 
-      <div className="flex justify-center mb-6">
-        <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1">
-          Popular Items
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {popularItems.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white p-4 rounded shadow text-center hover:shadow-lg transition"
-          >
-            <img
-              src={item.image}
-              alt={item.name}
-              className="h-36 w-auto mx-auto mb-4 object-contain transition-transform hover:scale-105"
-            />
-            <h3 className="font-bold text-lg mb-1">{item.name}</h3>
-            <p className="text-gray-600 mb-2">Rs.{item.price.toFixed(2)}</p>
-            <div className="flex items-center justify-center gap-2">
-              <input
-                type="number"
-                min="1"
-                placeholder="1"
-                value={quantities[item.id] || ""}
-                onChange={(e) => handleChange(item.id, e.target.value)}
-                className="w-14 border border-gray-300 rounded p-1 text-center"
-              />
-              <button
-                onClick={() => handleAddToCart(item)}
-                className="bg-green-800 hover:bg-green-200 text-white hover:text-green-800 px-3 py-1 rounded text-lg flex items-center justify-center transition-colors"
-              >
-                🛒
-              </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((item) => (
+            <div key={item._id} className="bg-white p-4 rounded shadow text-center hover:shadow-lg transition">
+              <div className="h-36 flex items-center justify-center mb-4">
+                <img
+                  src={item.image1}
+                  alt={item.name}
+                  className="max-h-full max-w-full object-contain transition-transform hover:scale-105"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/placeholder-image.jpg';
+                  }}
+                />
+              </div>
+              <h3 className="font-bold text-lg mb-1">{item.name}</h3>
+              <p className="text-gray-600 mb-2">Rs.{Number(item.price).toFixed(2)}</p>
+              <div className="flex items-center justify-center gap-2">
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="1"
+                  value={quantities[item._id] || ""}
+                  onChange={(e) => handleChange(item._id, e.target.value)}
+                  className="w-14 border border-gray-300 rounded p-1 text-center"
+                />
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className="bg-green-800 hover:bg-green-200 text-white hover:text-green-800 px-3 py-1 rounded text-lg flex items-center justify-center transition-colors"
+                >
+                  🛒
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={() => (window.location.href = "/menu")}
-          className="rounded-md border border-transparent py-2 px-4 flex items-center text-center text-xl transition-all text-slate-600 hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-        >
-          See all items
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-4 h-4 ml-1.5"
-          >
-            <path
-              fillRule="evenodd"
-              d="M16.72 7.72a.75.75 0 0 1 1.06 0l3.75 3.75a.75.75 0 0 1 0 1.06l-3.75 3.75a.75.75 0 1 1-1.06-1.06l2.47-2.47H3a.75.75 0 0 1 0-1.5h16.19l-2.47-2.47a.75.75 0 0 1 0-1.06Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
-    </section>
+    </>
   );
 };
 

@@ -7,13 +7,17 @@ const List = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch products
   const fetchList = async () => {
     try {
       setLoading(true);
       const response = await axios.get(`${backendUrl}/api/product/list`);
       if (response.data.success) {
-        setList(response.data.products);
+        // Ensure each product has a valid image array
+        const processedProducts = response.data.products.map(product => ({
+          ...product,
+          image1: Array.isArray(product.image1) ? product.image1 : [product.image1 || '/placeholder.jpg']
+        }));
+        setList(processedProducts);
       } else {
         toast.error(response.data.message || 'Failed to fetch products.');
       }
@@ -25,7 +29,6 @@ const List = () => {
     }
   };
 
-  // Remove product with confirmation
   const removeProduct = async (id) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -39,7 +42,7 @@ const List = () => {
         { id },
         {
           headers: {
-            Authorization: `Bearer ${token}` // Use this if your backend expects a Bearer token
+            Authorization: `Bearer ${token}`
           }
         }
       );
@@ -55,7 +58,6 @@ const List = () => {
       toast.error(error.response?.data?.message || 'Error deleting product.');
     }
   };
-
 
   useEffect(() => {
     fetchList();
@@ -85,9 +87,13 @@ const List = () => {
               className='grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-2 px-4 border text-sm'
             >
               <img
-                src={item.image[0]}
+                src={item.image1[0] || '/placeholder.jpg'}
                 alt={item.name}
                 className='w-12 h-12 object-cover rounded-md'
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/placeholder.jpg';
+                }}
               />
               <p>{item.name}</p>
               <p>{item.category}</p>
