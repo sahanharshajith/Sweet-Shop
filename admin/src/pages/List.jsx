@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { backendUrl, currency } from '../App';
+import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
 
 const List = () => {
@@ -97,7 +97,7 @@ const List = () => {
               />
               <p>{item.name}</p>
               <p>{item.category}</p>
-              <p>{currency}{item.price}</p>
+              <p>Rs.{item.price}</p>
               <div
                 onClick={() => removeProduct(item._id)}
                 className='text-center text-red-500 cursor-pointer text-lg font-bold hover:text-red-700'

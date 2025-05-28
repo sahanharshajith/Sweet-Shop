@@ -105,7 +105,7 @@ const Add = ({token}) => {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder='Price in $'
+            placeholder='Price in Rs.'
             required
           />
         </div>
