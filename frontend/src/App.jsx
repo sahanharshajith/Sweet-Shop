@@ -14,6 +14,8 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import Payment from './pages/payment';
 import Footer from './components/Footer'
+import OrdersPage from './pages/OrdersPage';
+import AdminOrdersPage from './pages/AdminOrdersPage';
 
 const App = () => {
   return (
@@ -32,6 +34,8 @@ const App = () => {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path='/payment' element={<Payment />} />
+        <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/admin/orders" element={<AdminOrdersPage />} />
       </Routes>
       <Footer />
     </div>

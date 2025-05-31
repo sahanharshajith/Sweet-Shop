@@ -142,6 +142,27 @@ export default function PaymentPage() {
         setCartCount(0);
         
         toast.success('Payment processed successfully!');
+
+        // Add this to your payment success logic in payment.jsx
+        const token = localStorage.getItem('token');
+        fetch('http://localhost:4000/api/orders', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            items: cartItems,
+            total: calculateGrandTotal()
+          })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              // Show order success, clear cart, etc.
+              localStorage.removeItem('sweetCart');
+            }
+          });
       }, 2000);
     }
   };

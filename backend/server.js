@@ -5,6 +5,7 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -42,6 +43,7 @@ connectCloudinary();
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/product', productRouter);
+app.use('/api/orders', orderRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

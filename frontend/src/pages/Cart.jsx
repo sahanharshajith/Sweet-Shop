@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedCart = localStorage.getItem('sweetCart');
@@ -50,13 +51,51 @@ export default function CartPage() {
     ));
   };
 
-  const handleCheckout = () => {
-    alert('Proceeding to checkout!');
+  const handleCheckout = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('Please login to place an order');
+      return;
+    }
+    if (cartItems.length === 0) {
+      toast.error('Cart is empty');
+      return;
+    }
+    try {
+      const res = await fetch('http://localhost:4000/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          items: cartItems.map(item => ({
+            productId: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price
+          })),
+          total: Number(calculateTotal())
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCartItems([]);
+        toast.success('Order placed successfully!');
+        navigate("/orders", { state: { orderPlaced: true } });
+      } else {
+        toast.error(data.message || 'Order failed');
+      }
+    } catch (error) {
+      toast.error('Order failed');
+    }
   };
 
   const goBackToShop = () => {
     window.location.href = '/menu';
   };
+
+  // After successful order placement
 
   return (
     <>
