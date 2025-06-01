@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { assets } from '../assets/assets';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const NavBar = () => {
   const [visible, setVisible] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateCartCount();
@@ -18,50 +20,52 @@ const NavBar = () => {
     setCartCount(count);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    toast.success('Logged out successfully!');
+    navigate('/'); // Redirect to home
+  };
+
   return (
-    <div className='flex items-center justify-between py-5 font-medium'>
+    <div className="sticky top-0 z-50 bg-gray-800 text-white backdrop-blur-md shadow-md px-6 sm:px-10 py-4 flex items-center justify-between font-medium">
       <Link to='/'>
-        <img src={assets.logo} alt="" className='w-20' />
+        <img src={assets.logo} alt="Logo" className='w-20 hover:scale-105 transition-transform duration-200' />
       </Link>
 
-      <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
-        <NavLink to='/' className='flex flex-col items-center gap-1'>
-          <p>HOME</p>
-        </NavLink>
-        <NavLink to='/about' className='flex flex-col items-center gap-1'>
-          <p>ABOUT</p>
-        </NavLink>
-        <NavLink to='/service' className='flex flex-col items-center gap-1'>
-          <p>SERVICE</p>
-        </NavLink>
-        <NavLink to='/menu' className='flex flex-col items-center gap-1'>
-          <p>MENU</p>
-        </NavLink>
-        <NavLink to='/contact' className='flex flex-col items-center gap-1'>
-          <p>CONTACT</p>
-        </NavLink>
+      <ul className='hidden sm:flex gap-6 text-sm'>
+        {["/", "/about", "/service", "/menu", "/contact"].map((path, index) => (
+          <NavLink
+            key={index}
+            to={path}
+            className={({ isActive }) =>
+              `hover:text-red-400 transition-colors ${
+                isActive ? "text-red-400 font-semibold border-b-2 border-red-400" : ""
+              }`
+            }
+          >
+            {["HOME", "ABOUT", "SERVICE", "MENU", "CONTACT"][index]}
+          </NavLink>
+        ))}
       </ul>
 
       <div className='flex items-center gap-6'>
-        <div className='group relative'>
+        <div className='relative group'>
           <Link to='/authform'>
-            <img src={assets.profile_icon} alt="Profile" className='w-5 cursor-pointer' />
+            <img src={assets.profile_icon} alt="Profile" className='w-6 h-6 cursor-pointer invert' />
           </Link>
-          <div className='group-hover:block hidden absolute right-0 pt-4'>
-            <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded'>
-              <p className='cursor-pointer hover:text-black'>My Profile</p>
-              <Link to='/orders' className='cursor-pointer hover:text-black'>Orders</Link>
-              <p className='cursor-pointer hover:text-black'>Logout</p>
-            </div>
+          <div className='hidden group-hover:flex absolute right-0 top-8 flex-col gap-2 w-36 py-2 px-4 bg-white shadow-lg text-gray-700 rounded z-10'>
+            <p className='cursor-pointer hover:text-black'>My Profile</p>
+            <Link to='/orders' className='hover:text-black'>Orders</Link>
+            <p className='cursor-pointer hover:text-black' onClick={handleLogout}>Logout</p>
           </div>
         </div>
 
         <Link to='/cart' className='relative'>
-          <img src={assets.cart_icon} alt="Cart" className='w-5 cursor-pointer' />
+          <img src={assets.cart_icon} alt="Cart" className='w-6 h-6 cursor-pointer invert' />
           {cartCount > 0 && (
-            <p className='absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-red-500 text-white aspect-square rounded-full text-[10px]'>
+            <span className='absolute -top-1 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full'>
               {cartCount > 99 ? '99+' : cartCount}
-            </p>
+            </span>
           )}
         </Link>
 
@@ -69,7 +73,7 @@ const NavBar = () => {
           onClick={() => setVisible(true)}
           src={assets.menu_icon}
           alt="Menu"
-          className='w-5 cursor-pointer sm:hidden'
+          className='w-6 cursor-pointer sm:hidden invert'
         />
       </div>
 

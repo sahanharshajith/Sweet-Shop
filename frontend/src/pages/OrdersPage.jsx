@@ -105,7 +105,7 @@ export default function OrdersPage() {
                   <span className="font-medium">Order #</span>
                   <span className="text-indigo-600 ml-1">{order._id.substring(0, 8)}</span>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status || 'processing')}`}>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-400 ${getStatusColor(order.status || 'processing')}`}>
                   {order.status || 'Processing'}
                 </span>
               </div>
@@ -123,7 +123,6 @@ export default function OrdersPage() {
                   </div>
                   
                   <div className="flex items-center gap-2">
-                    <FiDollarSign className="text-gray-400" />
                     <div>
                       <p className="text-xs text-gray-500">Total</p>
                       <p className="text-sm font-medium">Rs {order.total.toFixed(2)}</p>

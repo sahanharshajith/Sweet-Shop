@@ -21,8 +21,8 @@ const AboutUs = () => {
           <div className="grid grid-cols-2 gap-4">
             <img src={assets.cakeImage} alt="Cake" className="w-48 h-48 object-cover rounded shadow-lg" />
             <img src={assets.starSweetImage} alt="Star sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
-            <img src={assets.citrusImage} alt="Citrus sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
-            <img src={assets.logoImage} alt="Logo" className="w-48 h-48 object-cover rounded shadow-lg" />
+            <img src={assets.banana} alt="Citrus sweet" className="w-48 h-48 object-cover rounded shadow-lg" />
+            <img src={assets.chocolate_marble} alt="Logo" className="w-48 h-48 object-cover rounded shadow-lg" />
           </div>
 
           <div className="md:w-1/2 text-gray-700 text-lg leading-relaxed md:text-left">

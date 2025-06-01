@@ -10,3 +10,5 @@ export default defineConfig({
   ],
   server : {port : 5173},
 })
+
+// Tailwind CSS configuration should be placed in a separate tailwind.config.js file.

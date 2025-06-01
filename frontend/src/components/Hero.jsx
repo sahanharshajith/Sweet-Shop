@@ -26,7 +26,7 @@ const Hero = () => {
         <img 
           src={assets.hero_image} 
           alt="Hero Dessert" 
-          className="w-130 h-full object-cover rounded-t-lg sm:rounded-none sm:rounded-r-lg"
+          className="w-110 h-full object-cover rounded-t-lg sm:rounded-none sm:rounded-r-lg"
         />
       </div>
     </div>
