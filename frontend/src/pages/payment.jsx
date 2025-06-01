@@ -182,6 +182,10 @@ export default function PaymentPage() {
     window.location.href = '/';
   };
 
+  const goToOrders = () => {
+    window.location.href = '/orders';
+  };
+
   // Format card number as user types
   const handleCardNumberChange = (e) => {
     let { value } = e.target;
@@ -417,13 +421,13 @@ export default function PaymentPage() {
               )}
 
               {activeStep === 3 && (
-                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
+                <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6 mx-auto max-w-2xl">
                   <div className="text-center py-6">
                     <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
                     <p className="text-gray-600 mb-6">Your order has been placed successfully.</p>
                     
-                    <div className="mb-6 max-w-md mx-auto">
+                    <div className="mb-6">
                       <div className="border-t border-b border-gray-200 py-4 px-6">
                         <div className="flex justify-between mb-2">
                           <span className="font-medium">Order Number:</span>
@@ -450,6 +454,12 @@ export default function PaymentPage() {
                         className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-6 rounded-md transition-colors"
                       >
                         GO TO HOME
+                      </button>
+                      <button
+                        onClick={goToOrders}
+                        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-md transition-colors"
+                      >
+                        VIEW ORDERS
                       </button>
                       <button
                         onClick={goBackToShop}

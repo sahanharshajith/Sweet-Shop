@@ -17,20 +17,20 @@ export default function OrdersPage() {
         const response = await fetch("http://localhost:4000/api/orders/my", {
           headers: { Authorization: `Bearer ${token}` }
         });
-        
+
         if (!response.ok) throw new Error("Failed to fetch orders");
-        
+
         const data = await response.json();
         if (data.success) {
-          // Process orders to ensure image URLs are correct
-          const processedOrders = data.orders.map(order => ({
-            ...order,
-            items: order.items.map(item => ({
-              ...item,
-              // Use image1 or image or fallback to empty string
-              imageUrl: item.image1 || item.image || ''
-            }))
-          }));
+          const processedOrders = data.orders
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by newest
+            .map(order => ({
+              ...order,
+              items: order.items.map(item => ({
+                ...item,
+                imageUrl: item.imageUrl || ''
+              }))
+            }));
           setOrders(processedOrders);
         } else {
           throw new Error(data.message || "Failed to load orders");
@@ -42,10 +42,8 @@ export default function OrdersPage() {
       }
     };
 
-    // Check if redirected after placing an order
     if (location.state?.orderPlaced) {
       setOrderSuccess(true);
-      // Clear the success message after 5 seconds
       const timer = setTimeout(() => setOrderSuccess(false), 5000);
       return () => clearTimeout(timer);
     }
@@ -105,11 +103,11 @@ export default function OrdersPage() {
                   <span className="font-medium">Order #</span>
                   <span className="text-indigo-600 ml-1">{order._id.substring(0, 8)}</span>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium bg-green-400 ${getStatusColor(order.status || 'processing')}`}>
+                <span className={`px-2 py-1 bg-green-400 rounded-full text-xs font-medium ${getStatusColor(order.status || 'processing')}`}>
                   {order.status || 'Processing'}
                 </span>
               </div>
-              
+
               <div className="p-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <div className="flex items-center gap-2">
@@ -121,7 +119,7 @@ export default function OrdersPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <div>
                       <p className="text-xs text-gray-500">Total</p>
@@ -129,7 +127,7 @@ export default function OrdersPage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <h4 className="text-sm font-medium mb-2">Items:</h4>
                 <ul className="space-y-2">
                   {order.items.map((item, idx) => (
@@ -137,9 +135,9 @@ export default function OrdersPage() {
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-100 rounded overflow-hidden flex items-center justify-center">
                           {item.imageUrl ? (
-                            <img 
-                              src={item.imageUrl} 
-                              alt={item.name} 
+                            <img
+                              src={item.imageUrl}
+                              alt={item.name}
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 e.target.onerror = null;
