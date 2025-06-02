@@ -94,6 +94,7 @@ const Add = ({token}) => {
             <option value="Cakes">Cakes</option>
             <option value="Desserts">Desserts</option>
             <option value="Cookies">Cookies</option>
+            <option value="Nibbles">Nibbles</option>
             <option value="Others">Others</option>
           </select>
         </div>

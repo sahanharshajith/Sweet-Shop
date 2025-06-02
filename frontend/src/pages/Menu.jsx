@@ -8,6 +8,7 @@ const FoodMenu = () => {
   const [quantities, setQuantities] = useState({});
   const [cartCount, setCartCount] = useState(0);
   const [categories, setCategories] = useState([]);
+  const [sortOption, setSortOption] = useState('default');
 
   const updateCartCount = useCallback(() => {
     const cart = JSON.parse(localStorage.getItem('sweetCart')) || [];
@@ -18,9 +19,7 @@ const FoodMenu = () => {
   useEffect(() => {
     updateCartCount();
     window.addEventListener('cartUpdated', updateCartCount);
-    return () => {
-      window.removeEventListener('cartUpdated', updateCartCount);
-    };
+    return () => window.removeEventListener('cartUpdated', updateCartCount);
   }, [updateCartCount]);
 
   useEffect(() => {
@@ -28,16 +27,13 @@ const FoodMenu = () => {
       try {
         const res = await axios.get('http://localhost:4000/api/product/list');
         const fetchedProducts = res.data.products || [];
-        
-        // Ensure all products have unique IDs
+
         const productsWithIds = fetchedProducts.map((product, index) => ({
           ...product,
-          id: product.id || `temp-id-${index}` // Fallback for missing IDs
+          id: product.id || `temp-id-${index}`,
         }));
-        
-        setProducts(productsWithIds);
 
-        // Extract unique categories
+        setProducts(productsWithIds);
         const uniqueCategories = ['All', ...new Set(productsWithIds.map(item => item.category || 'Uncategorized'))];
         setCategories(uniqueCategories.filter(Boolean));
       } catch (err) {
@@ -55,7 +51,6 @@ const FoodMenu = () => {
 
   const handleAddToCart = (item) => {
     const quantity = parseInt(quantities[item.id]) || 1;
-
     if (quantity <= 0) {
       toast.error("Please enter a valid quantity.");
       return;
@@ -79,80 +74,96 @@ const FoodMenu = () => {
     localStorage.setItem('sweetCart', JSON.stringify(currentCart));
     updateCartCount();
     window.dispatchEvent(new CustomEvent('cartUpdated'));
-
     toast.success(`${item.name} added to cart!`);
     setQuantities((prev) => ({ ...prev, [item.id]: "" }));
   };
 
-  const filteredItems = activeCategory === 'All'
-    ? products
-    : products.filter(item => item.category === activeCategory);
+  const filteredItems = products.filter(item => activeCategory === 'All' || item.category === activeCategory);
+
+  const sortedItems = [...filteredItems].sort((a, b) => {
+    switch (sortOption) {
+      case 'priceLow': return a.price - b.price;
+      case 'priceHigh': return b.price - a.price;
+      case 'nameAZ': return a.name.localeCompare(b.name);
+      case 'nameZA': return b.name.localeCompare(a.name);
+      default: return 0;
+    }
+  });
 
   return (
     <>
       <Toaster position="top-right" />
-      <div className="max-w-6xl mx-auto px-4 py-8 bg-[#e4e4e4]">
-        <div className="flex justify-between items-center mb-8">
-          <div className="text-center flex-1">
-            <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-4">
-              Food Menu
-            </h2>
-            <h3 className="text-3xl text-black font-bold">Sweets Items</h3>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 py-10 bg-gradient-to-br from-orange-50 to-pink-100">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-red-600 tracking-wide mb-2 border-b-2 inline-block border-red-400 px-6 pb-1">
+            Food Menu
+          </h2>
+          <p className="text-xl text-gray-700">Discover our tasty sweets</p>
         </div>
 
-        <div className="flex overflow-x-auto pb-4 mb-8 hide-scrollbar">
-          <div className="flex space-x-2 mx-auto">
+        <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+          <div className="flex flex-wrap gap-2 overflow-x-auto hide-scrollbar">
             {categories.map((category, index) => (
               <button
-                key={`category-${category || index}`} // Handle undefined categories
+                key={`category-${category || index}`}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm transition font-medium shadow ${
                   activeCategory === category
-                    ? 'bg-amber-500 text-white font-medium'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-amber-500 text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {category}
               </button>
             ))}
           </div>
+          <select
+            className="px-3 py-2 border border-gray-300 rounded bg-white text-sm shadow"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="default">Sort By</option>
+            <option value="priceLow">Price: Low to High</option>
+            <option value="priceHigh">Price: High to Low</option>
+            <option value="nameAZ">Name: A-Z</option>
+            <option value="nameZA">Name: Z-A</option>
+          </select>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredItems.map((item, index) => (
-            <div 
-              key={`product-${item.id || index}`} // Fallback to index if id is missing
-              className="bg-white p-4 rounded shadow text-center hover:shadow-lg transition"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {sortedItems.map((item, index) => (
+            <div
+              key={`product-${item.id || index}`}
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-4 flex flex-col items-center text-center"
             >
               <img
                 src={item.image1}
                 alt={item.name}
-                className="h-36 w-auto mx-auto mb-4 object-contain transition-transform hover:scale-105"
+                className="h-36 w-auto object-contain mb-4 rounded-md"
               />
-              <h3 className="font-bold text-lg mb-1">{item.name}</h3>
-              <p className="text-gray-600 mb-2">Rs.{Number(item.price).toFixed(2)}</p>
-              <div className="flex items-center justify-center gap-2">
+              <h3 className="text-lg font-semibold text-gray-800 mb-1">{item.name}</h3>
+              <p className="text-red-600 font-medium mb-2">Rs.{Number(item.price).toFixed(2)}</p>
+              <div className="flex items-center gap-2">
                 <input
                   type="number"
                   min="1"
                   placeholder="1"
                   value={quantities[item.id] || ""}
                   onChange={(e) => handleChange(item.id, e.target.value)}
-                  className="w-14 border border-gray-300 rounded p-1 text-center"
+                  className="w-16 border border-gray-300 rounded p-1 text-center text-sm shadow-sm"
                 />
                 <button
                   onClick={() => handleAddToCart(item)}
-                  className="bg-green-800 hover:bg-green-200 text-white hover:text-green-800 px-3 py-1 rounded text-lg flex items-center justify-center transition-colors"
+                  className="bg-green-700 hover:bg-green-600 text-white px-3 py-1.5 rounded text-sm transition flex items-center gap-1 shadow"
                 >
-                  🛒
+                  🛒 Add
                 </button>
               </div>
             </div>
           ))}
         </div>
 
-        {filteredItems.length === 0 && (
+        {sortedItems.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No items found in this category</p>
           </div>
