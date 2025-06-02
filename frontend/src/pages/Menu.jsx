@@ -93,21 +93,21 @@ const FoodMenu = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="max-w-7xl mx-auto px-4 py-10 bg-gradient-to-br from-orange-50 to-pink-100">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold text-red-600 tracking-wide mb-2 border-b-2 inline-block border-red-400 px-6 pb-1">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-10 bg-gradient-to-br from-orange-50 to-pink-100 min-h-screen">
+        <div className="text-center mb-8 sm:mb-10">
+          <h2 className="text-red-600 text-xl sm:text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 mb-4 sm:mb-6">
             Food Menu
           </h2>
-          <p className="text-xl text-gray-700">Discover our tasty sweets</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900">Discover our tasty sweets</p>
         </div>
 
-        <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
-          <div className="flex flex-wrap gap-2 overflow-x-auto hide-scrollbar">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mb-6">
+          <div className="flex flex-wrap gap-2 overflow-x-auto hide-scrollbar justify-center md:justify-start">
             {categories.map((category, index) => (
               <button
                 key={`category-${category || index}`}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm transition font-medium shadow ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm transition font-medium shadow ${
                   activeCategory === category
                     ? 'bg-amber-500 text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-200'
@@ -118,7 +118,7 @@ const FoodMenu = () => {
             ))}
           </div>
           <select
-            className="px-3 py-2 border border-gray-300 rounded bg-white text-sm shadow"
+            className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded bg-white text-xs sm:text-sm shadow mt-2 md:mt-0"
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
@@ -130,31 +130,31 @@ const FoodMenu = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-8">
           {sortedItems.map((item, index) => (
             <div
               key={`product-${item.id || index}`}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-4 flex flex-col items-center text-center"
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-3 sm:p-4 flex flex-col items-center text-center"
             >
               <img
                 src={item.image1}
                 alt={item.name}
-                className="h-36 w-auto object-contain mb-4 rounded-md"
+                className="h-28 w-auto sm:h-36 object-contain mb-3 sm:mb-4 rounded-md"
               />
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">{item.name}</h3>
-              <p className="text-red-600 font-medium mb-2">Rs.{Number(item.price).toFixed(2)}</p>
-              <div className="flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1">{item.name}</h3>
+              <p className="text-red-600 font-medium mb-2 text-sm sm:text-base">Rs.{Number(item.price).toFixed(2)}</p>
+              <div className="flex items-center gap-2 w-full justify-center">
                 <input
                   type="number"
                   min="1"
                   placeholder="1"
                   value={quantities[item.id] || ""}
                   onChange={(e) => handleChange(item.id, e.target.value)}
-                  className="w-16 border border-gray-300 rounded p-1 text-center text-sm shadow-sm"
+                  className="w-12 sm:w-16 border border-gray-300 rounded p-1 text-center text-xs sm:text-sm shadow-sm"
                 />
                 <button
                   onClick={() => handleAddToCart(item)}
-                  className="bg-green-700 hover:bg-green-600 text-white px-3 py-1.5 rounded text-sm transition flex items-center gap-1 shadow"
+                  className="bg-green-700 hover:bg-green-600 text-white px-2 sm:px-3 py-1.5 rounded text-xs sm:text-sm transition flex items-center gap-1 shadow"
                 >
                   🛒 Add
                 </button>

@@ -54,7 +54,6 @@ const NavBar = () => {
             <img src={assets.profile_icon} alt="Profile" className='w-6 h-6 cursor-pointer invert' />
           </Link>
           <div className='hidden group-hover:flex absolute right-0 top-8 flex-col gap-2 w-36 py-2 px-4 bg-white shadow-lg text-gray-700 rounded z-10'>
-            <p className='cursor-pointer hover:text-black'>My Profile</p>
             <Link to='/orders' className='hover:text-black'>Orders</Link>
             <p className='cursor-pointer hover:text-black' onClick={handleLogout}>Logout</p>
           </div>

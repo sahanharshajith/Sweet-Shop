@@ -11,7 +11,6 @@ const List = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOption, setSortOption] = useState('default');
   const [loading, setLoading] = useState(true);
-  const [priceMap, setPriceMap] = useState({});
 
   const fetchList = async () => {
     try {
@@ -25,12 +24,6 @@ const List = () => {
             : [product.image1 || '/placeholder.jpg']
         }));
 
-        const priceState = {};
-        processedProducts.forEach(p => {
-          priceState[p._id] = p.price;
-        });
-
-        setPriceMap(priceState);
         setList(processedProducts);
         setFilteredList(processedProducts);
 
@@ -46,30 +39,6 @@ const List = () => {
       toast.error(error.message || 'Error fetching products.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const updatePrice = async (id) => {
-    const token = localStorage.getItem('token');
-    if (!token) return toast.error('Unauthorized');
-
-    try {
-      const res = await axios.put(`${backendUrl}/api/product/update`, {
-        id,
-        price: priceMap[id]
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (res.data.success) {
-        toast.success('Price updated');
-        fetchList();
-      } else {
-        toast.error(res.data.message || 'Failed to update price');
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error('Error updating price');
     }
   };
 
@@ -150,7 +119,7 @@ const List = () => {
           <span>Image</span>
           <span>Name</span>
           <span>Category</span>
-          <span>Price (Edit)</span>
+          <span>Price</span>
           <span className='text-center'>Action</span>
         </div>
 
@@ -175,22 +144,7 @@ const List = () => {
               />
               <p>{item.name}</p>
               <p>{item.category}</p>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  value={priceMap[item._id]}
-                  onChange={(e) =>
-                    setPriceMap(prev => ({ ...prev, [item._id]: e.target.value }))
-                  }
-                  className="border rounded px-2 py-1 w-24"
-                />
-                <button
-                  onClick={() => updatePrice(item._id)}
-                  className="text-green-600 text-sm font-medium hover:underline"
-                >
-                  Save
-                </button>
-              </div>
+              <div>{item.price}</div>
               <div className="text-center">
                 <FiTrash2
                   onClick={() => removeProduct(item._id)}

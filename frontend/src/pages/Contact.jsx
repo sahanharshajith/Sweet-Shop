@@ -22,7 +22,7 @@ export default function ContactPage() {
     e.preventDefault();
     console.log('Form submitted:', formData);
   };
-
+  
   return (
     <>
       <div className="bg-[#e4e4e4] min-h-screen p-4 md:p-8 flex flex-col items-center">

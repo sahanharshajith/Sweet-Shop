@@ -1,27 +1,43 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function AdminOrdersPage() {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchOrders = async () => {
-    setLoading(true);
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:4000/api/orders/all", {
+      const res = await axios.get("http://localhost:4000/api/orders/all", {
         headers: { Authorization: `Bearer ${token}` }
       });
-      const data = await res.json();
-      if (data.success) {
-        setOrders(data.orders);
-      } else {
-        toast.error("Failed to fetch orders");
+      if (res.data.success) {
+        setOrders(res.data.orders);
       }
-    } catch (error) {
-      toast.error("Error fetching orders");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      toast.error("Failed to fetch orders");
+    }
+  };
+
+  const updateStatus = async (id, status) => {
+    try {
+      const res = await axios.put(`http://localhost:4000/api/orders/${id}/status`, { status });
+      if (res.data.success) {
+        toast.success("Status updated");
+        fetchOrders();
+      }
+    } catch {
+      toast.error("Failed to update status");
+    }
+  };
+
+  const deleteOrder = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/orders/${id}`);
+      toast.success("Order deleted");
+      fetchOrders();
+    } catch {
+      toast.error("Failed to delete order");
     }
   };
 
@@ -29,73 +45,43 @@ export default function AdminOrdersPage() {
     fetchOrders();
   }, []);
 
-  const handleStatusChange = async (orderId, status) => {
-    const token = localStorage.getItem("token");
-    try {
-      const res = await fetch(`http://localhost:4000/api/orders/${orderId}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ status })
-      });
-      const data = await res.json();
-      if (data.success) {
-        toast.success("Order status updated");
-        fetchOrders();
-      } else {
-        toast.error(data.message || "Failed to update status");
-      }
-    } catch (error) {
-      toast.error("Error updating order status");
-    }
-  };
-
   return (
-    <div className="max-w-4xl mx-auto mt-10 px-4">
-      <h2 className="text-3xl font-semibold mb-6">All Orders (Admin)</h2>
-
-      {loading ? (
-        <p className="text-gray-500">Loading orders...</p>
-      ) : orders.length === 0 ? (
-        <p className="text-gray-600">No orders yet.</p>
-      ) : (
-        <div className="space-y-6">
-          {orders.map(order => (
-            <div key={order._id} className="p-5 border rounded-lg shadow-sm bg-white">
-              <div className="mb-2 font-bold text-indigo-600">Order #{order._id}</div>
-              <div className="text-gray-700 mb-1">
-                <strong>User:</strong>{" "}
-                {order.user ? `${order.user.name} (${order.user.email})` : "N/A"}
-              </div>
-              <div className="text-gray-600">Date: {new Date(order.createdAt).toLocaleString()}</div>
-              <div className="text-gray-700 mb-2">Total: ₹{order.total}</div>
-              <div className="mb-2">
-                <label className="font-medium mr-2">Status:</label>
-                <select
-                  value={order.status}
-                  onChange={e => handleStatusChange(order._id, e.target.value)}
-                  className="border rounded px-2 py-1 text-sm"
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Processing">Processing</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
-              </div>
-              <ul className="divide-y divide-gray-200 mt-2 text-sm">
-                {order.items.map((item, idx) => (
-                  <li key={idx} className="py-1 flex justify-between text-gray-700">
-                    <span>{item.name} × {item.quantity}</span>
-                    <span>₹{item.price}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <div className="p-6 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Manage Orders</h2>
+      {orders.map((order) => (
+        <div key={order._id} className="border p-4 mb-4 rounded shadow-sm">
+          <div className="flex justify-between items-center mb-2">
+            <span className="font-semibold">Order ID: {order._id}</span>
+            <select
+              value={order.status}
+              onChange={(e) => updateStatus(order._id, e.target.value)}
+              className="border px-2 py-1 rounded"
+            >
+              <option>Pending</option>
+              <option>Processing</option>
+              <option>Shipped</option>
+              <option>Delivered</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+          <p><strong>User:</strong> {order.user?.name} ({order.user?.email})</p>
+          <p><strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+          <p><strong>Total:</strong> Rs.{order.total}</p>
+          <ul className="ml-4 list-disc mt-2">
+            {order.items.map((item, i) => (
+              <li key={i}>{item.name} × {item.quantity} – Rs.{item.price}</li>
+            ))}
+          </ul>
+          <button
+            onClick={() => deleteOrder(order._id)}
+            className="mt-3 text-red-600 hover:underline"
+          >
+            Delete Order
+          </button>
         </div>
-      )}
+      ))}
     </div>
   );
-}
+};
+
+export default Orders;
