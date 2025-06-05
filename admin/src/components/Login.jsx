@@ -30,7 +30,7 @@ const Login = ({ setToken }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-pink-100 flex justify-center items-center">
+    <div className="min-h-screen bg-gradient-to-br bg-[#a5a5a5] flex justify-center items-center">
       <ToastContainer position="top-right" />
       <form
         onSubmit={handleSubmit}

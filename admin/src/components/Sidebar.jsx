@@ -5,7 +5,7 @@ import Order from '../assets/order_icon.png'
 
 const Sidebar = () => {
   return (
-    <div className='w-[18%] min-h-screen border-r-2 bg-[#e4e4e4]'>
+    <div className='w-[18%] min-h-screen border-r-2 bg-[#a5a5a5]'>
         <div className='flex flex-col gap-4 pt-6 pl-[20%] text-[15px]'>
             <NavLink className='flex items-center gap-3 border border-gray-700 border-r-0 px-3 py-2 rounded-l' to = "/add">
                 <img className='w-5 h-5' src={Add} alt="" />
