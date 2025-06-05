@@ -100,7 +100,7 @@ export default function CartPage() {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="bg-[#e4e4e4] min-h-screen">
+      <div className="bg-[#a5a5a5] min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           <div className="text-center mb-8">
             <h2 className="text-red-600 text-xl sm:text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-2 sm:my-4">
@@ -270,7 +270,7 @@ export default function CartPage() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
             <button
               onClick={goBackToShop}
-              className="bg-gray-500 hover:bg-gray-600 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md flex items-center justify-center transition-colors sm:flex-1 text-sm sm:text-base"
+              className="bg-gray-900 hover:bg-gray-700 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-md flex items-center justify-center transition-colors sm:flex-1 text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
               BACK TO SHOP

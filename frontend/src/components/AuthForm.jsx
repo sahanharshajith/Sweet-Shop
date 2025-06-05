@@ -50,7 +50,7 @@ const AuthForm = ({ type = 'signin' }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#e4e4e4] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#a5a5a5] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           {type === 'signin' ? 'Sign in to your account' : 'Create a new account'}

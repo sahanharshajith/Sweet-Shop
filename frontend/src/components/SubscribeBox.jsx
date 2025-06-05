@@ -1,17 +1,22 @@
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SubscribeBox = () => {
   const [email, setEmail] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Subscribing email:', email);
-    alert('Thank you for subscribing!');
-    setEmail('');
+    if (email) {
+      toast.success('Thank you for subscribing!');
+      setEmail('');
+    } else {
+      toast.error('Please enter a valid email.');
+    }
   };
 
   return (
-    <div className='bg-[#e4e4e4] text-gray-700 pt-2 pb-10 px-4'>
+    <div className='bg-[#a5a5a5] text-gray-700 pt-2 pb-10 px-4'>
+      <Toaster position="top-right" />
       <div className="max-w-6xl mx-auto text-center mb-8">
         <h2 className="text-2xl md:text-3xl font-bold mb-4">
           Want us to email you occasionally with Fluffy Delights news?

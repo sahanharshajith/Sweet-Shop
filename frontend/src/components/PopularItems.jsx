@@ -66,7 +66,7 @@ const PopularItems = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="max-w-6xl mx-auto px-4 py-8 bg-[#e4e4e4]">
+      <div className="max-w-6xl mx-auto px-4 py-8 bg-[#a5a5a5]">
         <div className="text-center mb-8">
           <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 my-4">
             Popular Items

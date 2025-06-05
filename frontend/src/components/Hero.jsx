@@ -3,7 +3,7 @@ import { assets } from '../assets/assets';
 
 const Hero = () => {
   return (
-    <div className="flex flex-col-reverse sm:flex-row items-center bg-gradient-to-r bg-[#e4e4e4] shadow-md rounded-lg overflow-hidden">
+    <div className="flex flex-col-reverse sm:flex-row items-center bg-gradient-to-r bg-[#a5a5a5] shadow-md rounded-lg overflow-hidden">
       
       <div className="w-full sm:w-1/2 flex items-center justify-center py-12 px-6 sm:px-10">
         <div className="text-[#333] text-center sm:text-left max-w-lg">

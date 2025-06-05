@@ -5,7 +5,7 @@ import SubscribeBox from '../components/SubscribeBox';
 const AboutUs = () => {
   return (
     <>
-      <section className="bg-[#e4e4e4] py-12 px-6 md:px-16 text-center">
+      <section className="bg-[#a5a5a5] py-12 px-6 md:px-16 text-center">
 
         <div className="flex justify-center mb-6">
           <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1">

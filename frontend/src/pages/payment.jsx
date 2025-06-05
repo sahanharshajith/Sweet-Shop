@@ -214,7 +214,7 @@ export default function PaymentPage() {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="bg-gray-100 min-h-screen">
+      <div className="bg-[#a5a5a5] min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
           {/* Header Section */}
           <div className="text-center mb-8">
@@ -283,7 +283,7 @@ export default function PaymentPage() {
                         value={formData.fullName}
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-md ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="John Doe"
+                        placeholder="Enter your name"
                       />
                       {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
                     </div>
@@ -295,7 +295,7 @@ export default function PaymentPage() {
                         value={formData.email}
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="john@example.com"
+                        placeholder="Enter your email"
                       />
                       {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                     </div>
@@ -307,7 +307,7 @@ export default function PaymentPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-md ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="123-456-7890"
+                        placeholder="+94 123 456 7890"
                       />
                       {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                     </div>
@@ -331,7 +331,7 @@ export default function PaymentPage() {
                         value={formData.city}
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-md ${errors.city ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="New York"
+                        placeholder="Colombo"
                       />
                       {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
                     </div>
@@ -379,7 +379,7 @@ export default function PaymentPage() {
                         value={formData.cardName}
                         onChange={handleChange}
                         className={`w-full p-2 border rounded-md ${errors.cardName ? 'border-red-500' : 'border-gray-300'}`}
-                        placeholder="John Doe"
+                        placeholder="Enter cardholder's name"
                       />
                       {errors.cardName && <p className="text-red-500 text-xs mt-1">{errors.cardName}</p>}
                     </div>

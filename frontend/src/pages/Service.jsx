@@ -32,7 +32,7 @@ const features = [
 const ServiceFeatures = () => {
   return (
     <>
-    <section className="py-12 px-6 md:px-16 bg-[#e4e4e4]">
+    <section className="py-12 px-6 md:px-16 bg-[#a5a5a5]">
       <div className="flex justify-center mb-10">
         <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1">
           Services

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Phone, Mail } from 'lucide-react';
 import SubscribeBox from '../components/SubscribeBox';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -20,12 +21,23 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    if (
+      formData.name.trim() &&
+      formData.email.trim() &&
+      formData.subject.trim() &&
+      formData.message.trim()
+    ) {
+      toast.success('Your message has been sent!Our team will get back to you soon.');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } else {
+      toast.error('Please fill in all fields.');
+    }
   };
   
   return (
     <>
-      <div className="bg-[#e4e4e4] min-h-screen p-4 md:p-8 flex flex-col items-center">
+      <Toaster position="top-right" />
+      <div className="bg-[#a5a5a5] min-h-screen p-4 md:p-8 flex flex-col items-center">
         <h2 className="text-red-600 text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 mb-6">
           Contact Us
         </h2>
@@ -63,12 +75,13 @@ export default function ContactPage() {
 
               <div className="w-full h-48 md:h-72 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.935847123456!2d79.904709!3d6.888115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a0e1d815def%3A0xecf6edfdd056ab67!2sSweet%20Hut!5e0!3m2!1sen!2slk!4v1691234567890!5m2!1sen!2slk"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.6657771585938!2d72.86329616936628!3d19.209794908052633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7125144ba69%3A0x6fe1beff7b3205b5!2sFluffy%20Delights!5e0!3m2!1sen!2slk!4v1749144224183!5m2!1sen!2slk"
                   className="w-full h-full"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
-                  title="Sweet Hut Location"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Fluffy Delights by U Location"
                 ></iframe>
               </div>
             </div>

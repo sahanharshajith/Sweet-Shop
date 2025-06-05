@@ -93,7 +93,7 @@ const FoodMenu = () => {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-10 bg-gradient-to-br from-orange-50 to-pink-100 min-h-screen">
+      <div className="max-w-7xl mx-auto px-2 sm:px-4 py-6 sm:py-10 bg-gradient-to-br bg-[#a5a5a5] min-h-screen">
         <div className="text-center mb-8 sm:mb-10">
           <h2 className="text-red-600 text-xl sm:text-2xl font-semibold border-t border-b border-red-500 inline-block px-4 py-1 mb-4 sm:mb-6">
             Food Menu

@@ -22,7 +22,9 @@ const List = () => {
           image1: Array.isArray(product.image1)
             ? product.image1
             : [product.image1 || '/placeholder.jpg']
-        }));
+        }))
+        // Sort by createdAt descending (most recent first)
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         setList(processedProducts);
         setFilteredList(processedProducts);
@@ -81,6 +83,10 @@ const List = () => {
       result.sort((a, b) => a.price - b.price);
     } else if (sortOption === 'priceHigh') {
       result.sort((a, b) => b.price - a.price);
+    }
+    // Always keep newest first unless sorting by price
+    if (sortOption === 'default') {
+      result.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }
 
     setFilteredList(result);
