@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 4000;
 const allowedOrigins = [
   'http://localhost:5174', // Your frontend development URL
   'http://localhost:5173', // Common alternative port
-  process.env.FRONTEND_PROD_URL // Your production frontend URL
+  process.env.FRONTEND_PROD_URL, // Your production frontend URL
+  'https://sweet-shop-admin-ashen.vercel.app'
 ];
 
 app.use(cors({
