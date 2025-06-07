@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { Link } from "react-router-dom";
 
 const PopularItems = () => {
   const [products, setProducts] = useState([]);
@@ -107,6 +108,22 @@ const PopularItems = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* See All Items Button */}
+        <div className="flex justify-center mt-8">
+          <Link
+            to="/menu"
+            className="group bg-gray-900 text-white font-semibold px-6 py-2 rounded transition-colors flex items-center gap-2 hover:bg-gray-700"
+          >
+            See All Items
+            <span className="transition-transform group-hover:translate-x-1">
+              {/* Right arrow SVG */}
+              <svg className="inline w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </Link>
         </div>
       </div>
     </>
