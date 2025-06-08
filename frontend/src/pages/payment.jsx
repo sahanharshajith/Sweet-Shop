@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { ShoppingCart, ArrowLeft, CreditCard, User, Phone, MapPin, CheckCircle } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function PaymentPage() {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
@@ -145,7 +147,7 @@ export default function PaymentPage() {
 
         // Add this to your payment success logic in payment.jsx
         const token = localStorage.getItem('token');
-        fetch('http://localhost:4000/api/orders', {
+        fetch(`${API_BASE_URL}/api/orders`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

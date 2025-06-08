@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiLock, FiMail } from 'react-icons/fi';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AuthForm = ({ type = 'signin' }) => {
   const [formData, setFormData] = useState({
     ...(type === 'signup' && { name: '' }),
@@ -28,7 +30,7 @@ const AuthForm = ({ type = 'signin' }) => {
 
     try {
       const endpoint = type === 'signin' ? 'login' : 'register';
-      const res = await fetch(`http://localhost:4000/api/user/${endpoint}`, {
+      const res = await fetch(`${API_BASE_URL}/api/user/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

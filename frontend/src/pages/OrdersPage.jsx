@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { FiPackage, FiCheckCircle, FiClock, FiImage, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
@@ -11,7 +13,7 @@ export default function OrdersPage() {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:4000/api/orders/my", {
+        const response = await fetch(`${API_BASE_URL}/api/orders/my`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
