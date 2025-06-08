@@ -3,6 +3,8 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from "react-router-dom";
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const PopularItems = () => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -10,7 +12,7 @@ const PopularItems = () => {
   useEffect(() => {
     const fetchPopular = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/product/list');
+        const res = await axios.get(`${API_BASE_URL}/api/product/list`);
         const all = res.data.products || [];
         // Sort newest and get top 8
         const sorted = all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 8);

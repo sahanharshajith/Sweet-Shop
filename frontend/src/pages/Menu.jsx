@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const FoodMenu = () => {
   const [products, setProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -25,7 +27,7 @@ const FoodMenu = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/product/list');
+        const res = await axios.get(`${API_BASE_URL}/api/product/list`);
         const fetchedProducts = res.data.products || [];
 
         const productsWithIds = fetchedProducts.map((product, index) => ({

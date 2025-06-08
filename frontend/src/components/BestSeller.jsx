@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Bestseller = () => {
   const [bestsellers, setBestsellers] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -9,7 +11,7 @@ const Bestseller = () => {
   useEffect(() => {
     const fetchBestsellers = async () => {
       try {
-        const res = await axios.get('http://localhost:4000/api/product/list');
+        const res = await axios.get(`${API_BASE_URL}/api/product/list`);
         const filtered = res.data.products.filter(p => p.bestseller);
         
         // Add image fallback handling
